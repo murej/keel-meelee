@@ -29,6 +29,7 @@ model Dish {
         name Text
         recipe Text
         portions Number
+        mealItems MealItem[]
     }
 
     operations {
@@ -46,11 +47,18 @@ model Dish {
     )
 }
 
+model MealItem {
+    fields {
+        dish Dish
+        meal Meal
+    }
+}
+
 model Meal {
     fields {
         time MealTime
-        dish Dish
-        plan Plan
+        mealItems MealItem[]
+        plan Plan?
     }
 
     operations {
@@ -59,8 +67,13 @@ model Meal {
         // list listMyMeals(day?) {
         //     @where(meal.plan.owner == ctx.identity)
         // }
-        create createMeal() with (time.day, time.type, dish.id, plan.id)
-        update updateMeal(id) with (time.day?, time.type?, dish.id?, plan.id?)
+        create createMeal() with (time.day, time.type, mealItems.dish.id)
+        update updateMeal(id) with (
+            time.day?,
+            time.type?,
+            mealItems.dish.id?,
+            plan.id?,
+        )
         delete deleteMeal(id)
     }
 
