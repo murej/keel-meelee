@@ -6,18 +6,43 @@ enum DaysInAWeek {
     Friday
 }
 
-enum MealTime {
+enum MealType {
     Breakfast
     Lunch
     Dinner
 }
 
-model Meal {
+model MealTime {
     fields {
         day DaysInAWeek
-        time MealTime
+        type MealType
+    }
+
+    operations {
+        get getMealTime(id)
+        list listMealTimes(id)
+    }
+}
+
+model Dish {
+    fields {
         recipe Text
         portions Number
+    }
+
+    operations {
+        get getDish(id)
+        list listDishes()
+        create createDish() with (recipe, portions)
+        update updateDishPortions(id) with (portions)
+        delete deleteDish(id)
+    }
+}
+
+model Meal {
+    fields {
+        time MealTime
+        dish Dish
         plan Plan @unique
     }
 
@@ -27,8 +52,20 @@ model Meal {
         // list listMyMeals(day?) {
         //     @where(meal.plan.owner == ctx.identity)
         // }
-        create createMeal() with (day, time, recipe, portions, plan.id)
-        update updateMeal(id) with (day?, time?, recipe?, portions?, plan.id?)
+        create createMeal() with (
+            time.day,
+            time.type,
+            dish.recipe,
+            dish.portions,
+            plan.id,
+        )
+        update updateMeal(id) with (
+            time.day?,
+            time.type?,
+            dish.recipe?,
+            dish.portions?,
+            plan.id,
+        )
         delete deleteMeal(id)
     }
 
