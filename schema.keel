@@ -39,7 +39,7 @@ model Plan {
         meals Meal[]
         mouthsToFeed Number
         weekNumber Number
-        user User
+        owner Identity
     }
 
     operations {
@@ -59,16 +59,4 @@ model Plan {
         actions: [get, list, create, update, delete],
         expression: ctx.isAuthenticated
     )
-}
-
-model User {
-    fields {
-        identity Identity @unique
-        plans Plan[]
-    }
-
-    operations {
-        create createUser() with (identity.id, plans.id?)
-        delete deleteUser(id)
-    }
 }
