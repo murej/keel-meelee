@@ -18,7 +18,7 @@ model Meal {
         time MealTime
         recipe Text
         portions Number
-        plan Plan
+        plan Plan @unique
     }
 
     operations {
@@ -73,7 +73,7 @@ model Plan {
 
 model User {
     fields {
-        identity Identity
+        identity Identity @unique
         plans Plan[]
     }
 
