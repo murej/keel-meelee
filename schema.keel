@@ -29,12 +29,7 @@ model Meal {
     }
 
     @permission(
-        actions: [get, list],
-        expression: true
-    )
-
-    @permission(
-        actions: [create, update],
+        actions: [get, list, create, update, delete],
         expression: ctx.isAuthenticated
     )
 }
@@ -61,12 +56,7 @@ model Plan {
     }
 
     @permission(
-        actions: [get, list],
-        expression: true
-    )
-
-    @permission(
-        actions: [create, update],
+        actions: [get, list, create, update, delete],
         expression: ctx.isAuthenticated
     )
 }
