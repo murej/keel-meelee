@@ -94,10 +94,10 @@ model Plan {
         // @set(plan.owner = ctx.identity)
         // }
         update updatePlanMeal(id) with (
-            meals.day?,
-            meals.time?,
-            meals.recipe?,
-            meals.portions?,
+            meals.time.day?,
+            meals.time.type?,
+            meals.dish.recipe?,
+            meals.dish.portions?,
         )
         delete deletePlan(id)
     }
