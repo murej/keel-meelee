@@ -25,6 +25,7 @@ model Meal {
         get getMeal(id)
         list listMeals(day?)
         create createMeal() with (day, time, recipe, portions, plan.id)
+        delete deleteMeal(id)
     }
 
     @permission(
@@ -56,6 +57,7 @@ model Plan {
             meals.recipe,
             meals.portions,
         )
+        delete deletePlan(id)
     }
 
     @permission(
@@ -77,5 +79,6 @@ model User {
 
     operations {
         create createUser() with (identity.id, plans.id?)
+        delete deleteUser(id)
     }
 }
