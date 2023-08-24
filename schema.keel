@@ -1,0 +1,40 @@
+enum DaysInAWeek {
+    Monday
+    Tuesday
+    Wednesday
+    Thursday
+    Friday
+}
+
+enum MealTime {
+    Breakfast
+    Lunch
+    Dinner
+}
+
+model Meal {
+    fields {
+        day DaysInAWeek
+        time MealTime
+        recipe Text
+        portions Number
+        plan Plan
+    }
+
+    operations {
+        get getMeal(id)
+        list listMeals(day?)
+    }
+}
+
+model Plan {
+    fields {
+        meals Meal[]
+        mouthsToFeed Number
+    }
+
+    operations {
+        get getPlan(id)
+        list listPlans()
+    }
+}
