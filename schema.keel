@@ -52,7 +52,9 @@ model Plan {
         list listMyPlans() {
             @where(plan.owner == ctx.identity)
         }
-        create createPlan() with (meals.id?, mouthsToFeed, weekNumber, owner.id)
+        create createPlan() with (meals.id?, mouthsToFeed, weekNumber) {
+            @set(plan.owner = ctx.identity)
+        }
         update updatePlanMeal(id) with (
             meals.day?,
             meals.time?,
