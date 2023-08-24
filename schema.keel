@@ -24,6 +24,7 @@ model Meal {
     operations {
         get getMeal(id)
         list listMeals(day?)
+        create createMeal() with (day, time, recipe, portions, plan.id)
     }
 }
 
@@ -31,10 +32,18 @@ model Plan {
     fields {
         meals Meal[]
         mouthsToFeed Number
+        weekNumber Number
     }
 
     operations {
         get getPlan(id)
         list listPlans()
+        create createPlan() with (meals.id?, mouthsToFeed, weekNumber)
+        update updatePlanMeal(id) with (
+            meals.day,
+            meals.time,
+            meals.recipe,
+            meals.portions,
+        )
     }
 }
