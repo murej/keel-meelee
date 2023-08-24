@@ -77,7 +77,7 @@ model Plan {
         // list listMyPlans() {
         //     @where(plan.owner == ctx.identity)
         // }
-        create createPlan() with (meals.id, mouthsToFeed, weekNumber)
+        create createPlan() with (meals.id?, mouthsToFeed, weekNumber)
         // {
         // @set(plan.owner = ctx.identity)
         // }
