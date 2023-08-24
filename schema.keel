@@ -50,7 +50,7 @@ model Meal {
     fields {
         time MealTime
         dish Dish
-        plan Plan @unique
+        plan Plan
     }
 
     operations {
