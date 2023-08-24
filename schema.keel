@@ -26,6 +26,16 @@ model Meal {
         list listMeals(day?)
         create createMeal() with (day, time, recipe, portions, plan.id)
     }
+
+    @permission(
+        actions: [get, list],
+        expression: true
+    )
+
+    @permission(
+        actions: [create, update],
+        expression: ctx.isAuthenticated
+    )
 }
 
 model Plan {
@@ -46,4 +56,14 @@ model Plan {
             meals.portions,
         )
     }
+
+    @permission(
+        actions: [get, list],
+        expression: true
+    )
+
+    @permission(
+        actions: [create, update],
+        expression: ctx.isAuthenticated
+    )
 }
