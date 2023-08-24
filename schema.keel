@@ -52,20 +52,8 @@ model Meal {
         // list listMyMeals(day?) {
         //     @where(meal.plan.owner == ctx.identity)
         // }
-        create createMeal() with (
-            time.day,
-            time.type,
-            dish.recipe,
-            dish.portions,
-            plan.id,
-        )
-        update updateMeal(id) with (
-            time.day?,
-            time.type?,
-            dish.recipe?,
-            dish.portions?,
-            plan.id,
-        )
+        create createMeal() with (time.day, time.type, dish.id, plan.id)
+        update updateMeal(id) with (time.day?, time.type?, dish.id, plan.id)
         delete deleteMeal(id)
     }
 
@@ -89,25 +77,11 @@ model Plan {
         // list listMyPlans() {
         //     @where(plan.owner == ctx.identity)
         // }
-        create createPlan() with (
-            meals.time.day?,
-            meals.time.type?,
-            meals.dish.recipe?,
-            meals.dish.portions?,
-            mouthsToFeed,
-            weekNumber,
-        )
+        create createPlan() with (meals.id, mouthsToFeed, weekNumber)
         // {
         // @set(plan.owner = ctx.identity)
         // }
-        update updatePlanMeal(id) with (
-            meals.time.day?,
-            meals.time.type?,
-            meals.dish.recipe?,
-            meals.dish.portions?,
-            mouthsToFeed?,
-            weekNumber?,
-        )
+        update updatePlanMeal(id) with (meals.id?, mouthsToFeed?, weekNumber?)
         delete deletePlan(id)
     }
 
