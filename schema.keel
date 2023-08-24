@@ -89,7 +89,14 @@ model Plan {
         // list listMyPlans() {
         //     @where(plan.owner == ctx.identity)
         // }
-        create createPlan() with (meals.id?, mouthsToFeed, weekNumber)
+        create createPlan() with (
+            meals.time.day?,
+            meals.time.type?,
+            meals.dish.recipe?,
+            meals.dish.portions?,
+            mouthsToFeed,
+            weekNumber,
+        )
         // {
         // @set(plan.owner = ctx.identity)
         // }
@@ -98,6 +105,8 @@ model Plan {
             meals.time.type?,
             meals.dish.recipe?,
             meals.dish.portions?,
+            mouthsToFeed?,
+            weekNumber?,
         )
         delete deletePlan(id)
     }
