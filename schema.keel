@@ -60,7 +60,7 @@ model Meal {
         //     @where(meal.plan.owner == ctx.identity)
         // }
         create createMeal() with (time.day, time.type, dish.id, plan.id)
-        update updateMeal(id) with (time.day?, time.type?, dish.id, plan.id)
+        update updateMeal(id) with (time.day?, time.type?, dish.id?, plan.id?)
         delete deleteMeal(id)
     }
 
