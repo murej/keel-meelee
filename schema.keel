@@ -67,7 +67,7 @@ model Plan {
     fields {
         meals Meal[]
         mouthsToFeed Number
-        weekNumber Number
+        weekNumber Number @unique
         // owner Identity
     }
 
