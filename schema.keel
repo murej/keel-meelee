@@ -23,6 +23,7 @@ model Meal {
 
     operations {
         get getMeal(id)
+        list listMeals()
         list listMyMeals(day?) {
             @where(meal.plan.owner == ctx.identity)
         }
@@ -47,6 +48,7 @@ model Plan {
 
     operations {
         get getPlan(id)
+        list listPlans()
         list listMyPlans() {
             @where(plan.owner == ctx.identity)
         }
