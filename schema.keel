@@ -26,6 +26,7 @@ model MealTime {
 
 model Dish {
     fields {
+        name Text
         recipe Text
         portions Number
     }
@@ -33,7 +34,8 @@ model Dish {
     operations {
         get getDish(id)
         list listDishes()
-        create createDish() with (recipe, portions)
+        create createDish() with (name, recipe, portions)
+        update updateDishDetails(id) with (name, recipe)
         update updateDishPortions(id) with (portions)
         delete deleteDish(id)
     }
