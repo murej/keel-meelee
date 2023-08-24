@@ -39,6 +39,11 @@ model Dish {
         update updateDishPortions(id) with (portions)
         delete deleteDish(id)
     }
+
+    @permission(
+        actions: [get, list, create, update, delete],
+        expression: true
+    )
 }
 
 model Meal {
