@@ -27,6 +27,7 @@ model Meal {
             @where(meal.plan.owner == ctx.identity)
         }
         create createMeal() with (day, time, recipe, portions, plan.id)
+        update updateMeal(id) with (day?, time?, recipe?, portions?, plan.id?)
         delete deleteMeal(id)
     }
 
@@ -49,11 +50,12 @@ model Plan {
         list listMyPlans() {
             @where(plan.owner == ctx.identity)
         }
+        create createPlan() with (meals.id?, mouthsToFeed, weekNumber, owner.id)
         update updatePlanMeal(id) with (
-            meals.day,
-            meals.time,
-            meals.recipe,
-            meals.portions,
+            meals.day?,
+            meals.time?,
+            meals.recipe?,
+            meals.portions?,
         )
         delete deletePlan(id)
     }
