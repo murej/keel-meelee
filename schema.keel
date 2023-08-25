@@ -37,7 +37,7 @@ model Dish {
         list listDishes()
         create createDish() with (name, recipe, portions)
         update updateDishDetails(id) with (name, recipe)
-        update updateDishPortions(id) with (portions)
+        update updateRemainingPortions(id) with (portions)
         delete deleteDish(id)
     }
 
@@ -68,6 +68,10 @@ model Meal {
         //     @where(meal.plan.owner == ctx.identity)
         // }
         create createMeal() with (time.day, time.type, mealItems.dish.id, plan.id)
+        // this is needed, but fails to validate
+        // {
+        //     @set(meal.mealItems.meal.id = meal.id)
+        // }
         update updateMeal(id) with (
             time.day?,
             time.type?,
@@ -99,6 +103,7 @@ model Plan {
         // }
         list listWeeklyPlan(weekNumber)
         create createPlan() with (meals.id?, mouthsToFeed, weekNumber)
+        // this is needed, but ctx.identity is undefined in Tools
         // {
         // @set(plan.owner = ctx.identity)
         // }
