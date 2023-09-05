@@ -116,7 +116,3 @@ model Plan {
         expression: true
     )
 }
-
-job EmailNewCustomerReport {
-    @schedule("0 6 * * 5")
-}
