@@ -1,11 +1,13 @@
-import { handleRequest, handleJob, tracing } from '@teamkeel/functions-runtime';
-import { createContextAPI, createJobContextAPI, permissionFns } from '@teamkeel/sdk';
+import { handleRequest, handleJob, handleSubscriber, tracing } from '@teamkeel/functions-runtime';
+import { createContextAPI, createJobContextAPI, createSubscriberContextAPI, permissionFns } from '@teamkeel/sdk';
 import { createServer } from "http";
 import job_emailNewCustomerReport from "../jobs/emailNewCustomerReport.ts";
 const functions = {
 }
 const jobs = {
     emailNewCustomerReport: job_emailNewCustomerReport,
+}
+const subscribers = {
 }
 const actionTypes = {
 }
@@ -40,6 +42,12 @@ const listener = async (req, res) => {
 			rpcResponse = await handleJob(json, {
 				jobs,
 				createJobContextAPI,
+			});
+			break;
+		case "subscriber":
+			rpcResponse = await handleSubscriber(json, {
+				subscribers,
+				createSubscriberContextAPI,
 			});
 			break;
 		default:
