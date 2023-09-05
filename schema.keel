@@ -18,7 +18,7 @@ model MealTime {
         type MealType
     }
 
-    operations {
+    actions {
         get getMealTime(id)
         list listMealTimes(id)
     }
@@ -32,7 +32,7 @@ model Dish {
         mealItems MealItem[]
     }
 
-    operations {
+    actions {
         get getDish(id)
         list listDishes()
         create createDish() with (name, recipe, portions)
@@ -61,7 +61,7 @@ model Meal {
         plan Plan
     }
 
-    operations {
+    actions {
         get getMeal(id)
         list listMeals()
         // list listMyMeals(day?) {
@@ -95,7 +95,7 @@ model Plan {
         // owner Identity
     }
 
-    operations {
+    actions {
         get getPlan(id)
         list listPlans()
         // list listMyPlans() {
