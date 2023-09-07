@@ -43,7 +43,7 @@ model Dish {
 
     @permission(
         actions: [get, list, create, update, delete],
-        expression: true
+        expression: ctx.isAuthenticated
     )
 }
 
@@ -83,7 +83,7 @@ model Meal {
 
     @permission(
         actions: [get, list, create, update, delete],
-        expression: true
+        expression: ctx.isAuthenticated
     )
 }
 
@@ -113,6 +113,6 @@ model Plan {
 
     @permission(
         actions: [get, list, create, update, delete],
-        expression: true
+        expression: ctx.isAuthenticated
     )
 }
