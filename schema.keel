@@ -22,6 +22,11 @@ model MealTime {
         get getMealTime(id)
         list listMealTimes(id)
     }
+
+    @permission(
+        actions: [get, list, create, update, delete],
+        expression: ctx.isAuthenticated
+    )
 }
 
 model Dish {
