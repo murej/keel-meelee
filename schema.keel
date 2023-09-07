@@ -52,6 +52,20 @@ model MealItem {
         dish Dish
         meal Meal
     }
+
+    actions {
+        get getMealItem(id)
+        list listMealItems()
+        create createMealItem() with (
+            dish.name,
+            dish.recipe,
+            dish.portions,
+            meal.time.day,
+            meal.time.type,
+            meal.plan.id,
+        )
+        delete deleteMealItem(id)
+    }
 }
 
 model Meal {
