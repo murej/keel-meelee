@@ -71,6 +71,11 @@ model MealItem {
         )
         delete deleteMealItem(id)
     }
+
+    @permission(
+        actions: [get, list, create, update, delete],
+        expression: ctx.isAuthenticated
+    )
 }
 
 model Meal {
