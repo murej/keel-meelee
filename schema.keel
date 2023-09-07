@@ -56,7 +56,7 @@ model Meal {
     fields {
         time MealTime
         plan Plan
-        dish Dish
+        dish Dish?
     }
 
     actions {
