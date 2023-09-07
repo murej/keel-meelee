@@ -34,7 +34,7 @@ model Dish {
         name Text
         recipe Text
         portions Number
-        mealItems MealItem[]
+        meals Meal[]
     }
 
     actions {
@@ -52,37 +52,11 @@ model Dish {
     )
 }
 
-model MealItem {
-    fields {
-        dish Dish
-        meal Meal
-    }
-
-    actions {
-        get getMealItem(id)
-        list listMealItems()
-        create createMealItem() with (
-            dish.name,
-            dish.recipe,
-            dish.portions,
-            meal.time.day,
-            meal.time.type,
-            meal.plan.id,
-        )
-        delete deleteMealItem(id)
-    }
-
-    @permission(
-        actions: [get, list, create, update, delete],
-        expression: ctx.isAuthenticated
-    )
-}
-
 model Meal {
     fields {
         time MealTime
-        mealItems MealItem[]
         plan Plan
+        dish Dish
     }
 
     actions {
@@ -91,17 +65,16 @@ model Meal {
         // list listMyMeals(day?) {
         //     @where(meal.plan.owner == ctx.identity)
         // }
-        create createMeal() with (time.day, time.type, mealItems.dish.id, plan.id)
-        // this is needed, but fails to validate
-        // {
-        //     @set(meal.mealItems.meal.id = meal.id)
-        // }
-        update updateMeal(id) with (
-            time.day?,
-            time.type?,
-            mealItems.dish.id?,
-            plan.id?,
+        create createMealExistingDish() with (time.day, time.type, dish.id, plan.id)
+        create createMeal() with (
+            time.day,
+            time.type,
+            dish.name,
+            dish.recipe,
+            dish.portions,
+            plan.id,
         )
+        update updateMeal(id) with (time.day?, time.type?, dish.id?, plan.id?)
         delete deleteMeal(id)
     }
 
