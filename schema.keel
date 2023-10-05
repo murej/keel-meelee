@@ -94,9 +94,10 @@ model Plan {
 
     actions {
         get getPlan(id)
-        get getMyWeeklyPlan(weekNumber) {
-            @where(plan.owner == ctx.identity)
-        }
+        get getMyWeeklyPlan(weekNumber, owner.id)
+        // {
+        //     @where(plan.owner == ctx.identity)
+        // }
         list listPlans()
         list listMyPlan(weekNumber?, meals.time.day?, meals.time.type?) {
             @where(plan.owner == ctx.identity)
