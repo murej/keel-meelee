@@ -94,11 +94,11 @@ model Plan {
 
     actions {
         get getPlan(id)
-        list listPlans()
-        list listMyPlan(weekNumber?, meals.time.day?, meals.time.type?) {
+        get getMyWeeklyPlan(weekNumber) {
             @where(plan.owner == ctx.identity)
         }
-        list listMyWeeklyPlan(weekNumber) {
+        list listPlans()
+        list listMyPlan(weekNumber?, meals.time.day?, meals.time.type?) {
             @where(plan.owner == ctx.identity)
         }
         list listMyDailyPlan(weekNumber, meals.time.day) {
@@ -107,10 +107,6 @@ model Plan {
         create createPlan() with (meals.id?, mouthsToFeed, weekNumber) {
             @set(plan.owner = ctx.identity)
         }
-        // this is needed, but ctx.identity is undefined in Tools
-        // {
-        // @set(plan.owner = ctx.identity)
-        // }
         update updatePlanMeal(id) with (meals.id?, mouthsToFeed?, weekNumber?)
         delete deletePlan(id)
     }
