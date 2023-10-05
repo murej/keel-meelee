@@ -95,7 +95,7 @@ model Plan {
     actions {
         get getPlan(id)
         list listPlans()
-        list listMyPlans(weekNumber?, meals.time.day?, meals.time.type?) {
+        list listMyPlan(weekNumber?, meals.time.day?, meals.time.type?) {
             @where(plan.owner == ctx.identity)
         }
         list listMyWeeklyPlan(weekNumber) {
