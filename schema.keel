@@ -15,7 +15,7 @@ enum MealTime {
 model WeeklyPlan {
     fields {
         meals Meal[]
-        weekNumber Number @unique
+        weekNumber Number
         owner Identity @unique
     }
 
@@ -47,6 +47,8 @@ model WeeklyPlan {
             @where(ctx.identity == weeklyPlan.owner)
         }
     }
+
+    @unique([weekNumber, owner])
 
     @permission(
         expression: ctx.isAuthenticated,
