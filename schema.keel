@@ -21,7 +21,6 @@ model WeeklyPlan {
 
     actions {
         get getWeeklyPlan(id)
-        get getWeeklyPlanForOwner(weekNumber, owner.id)
         get getMyWeeklyPlan(weekNumber) {
             @where(ctx.identity == weeklyPlan.owner)
             @permission(expression: ctx.identity == weeklyPlan.owner)
@@ -70,6 +69,7 @@ model Meal {
     actions {
         get getMeal(id)
         list listMeals(weeklyPlan.id?)
+        list listWeeklyMealsForOwner(weeklyPlan.weekNumber, weeklyPlan.owner.id)
         update updateMeal(id) with (dish.id, time)
         delete deleteMeal(id)
     }
