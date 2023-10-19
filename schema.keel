@@ -58,7 +58,7 @@ model Meal {
         dish Dish
         day DayInAWeek
         time MealTime
-        weeklyPlan WeeklyPlan @unique
+        weeklyPlan WeeklyPlan
     }
 
     actions {
