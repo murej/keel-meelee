@@ -39,7 +39,7 @@ model WeeklyPlan {
 
     @permission(
         expression: ctx.isAuthenticated,
-        actions: [get, list, update, delete]
+        actions: [get, list, create, update, delete]
     )
 }
 
@@ -59,7 +59,7 @@ model Meal {
 
     @permission(
         expression: ctx.isAuthenticated,
-        actions: [get, list, update, delete]
+        actions: [get, list, create, update, delete]
     )
 }
 
@@ -79,6 +79,6 @@ model Dish {
 
     @permission(
         expression: ctx.isAuthenticated,
-        actions: [get, list, update, delete]
+        actions: [get, list, create, update, delete]
     )
 }
