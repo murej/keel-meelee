@@ -1,4 +1,4 @@
-enum DaysInAWeek {
+enum DayInAWeek {
     Monday
     Tuesday
     Wednesday
@@ -12,108 +12,73 @@ enum MealType {
     Dinner
 }
 
-model MealTime {
+model WeeklyPlan {
     fields {
-        day DaysInAWeek
-        type MealType
+        meals Meal[]
+        weekNumber Number @unique
+        owner Identity @unique
     }
 
     actions {
-        get getMealTime(id)
-        list listMealTimes(id)
+        get getMyWeeklyPlan(id) {
+            @where(ctx.identity == weeklyPlan.owner)
+        }
+        list listMyWeeklyPlans() {
+            @where(ctx.identity == weeklyPlan.owner)
+        }
+        create createMyWeeklyPlan() with (weekNumber, meals.dish.id, meals.time) {
+            @set(weeklyPlan.owner = ctx.identity)
+        }
+        update updateMyWeeklyPlan(id) with (weekNumber?, meals.dish.id?, meals.time?) {
+            @where(ctx.identity == weeklyPlan.owner)
+        }
+        delete deleteMyWeeklyPlan(id) {
+            @where(ctx.identity == weeklyPlan.owner)
+        }
     }
 
     @permission(
-        actions: [get, list, create, update, delete],
-        expression: ctx.isAuthenticated
+        expression: ctx.isAuthenticated,
+        actions: [get, list, update, delete]
+    )
+}
+
+model Meal {
+    fields {
+        dish Dish
+        time DayInAWeek
+        weeklyPlan WeeklyPlan @unique
+    }
+
+    actions {
+        get getMeal(id)
+        list listMeals()
+        update updateMeal(id) with (dish.id, time)
+        delete deleteMeal(id)
+    }
+
+    @permission(
+        expression: ctx.isAuthenticated,
+        actions: [get, list, update, delete]
     )
 }
 
 model Dish {
     fields {
         name Text
-        recipe Text
-        portions Number
-        meals Meal[]
+        recipeUrl Text?
     }
 
     actions {
         get getDish(id)
         list listDishes()
-        create createDish() with (name, recipe, portions)
-        update updateDishDetails(id) with (name, recipe)
-        update updateRemainingPortions(id) with (portions)
+        create createDish() with (name, recipeUrl)
+        update updateDish(id) with (name?, recipeUrl?)
         delete deleteDish(id)
     }
 
     @permission(
-        actions: [get, list, create, update, delete],
-        expression: ctx.isAuthenticated
-    )
-}
-
-model Meal {
-    fields {
-        time MealTime
-        plan Plan
-        dish Dish?
-    }
-
-    actions {
-        get getMeal(id)
-        list listMeals()
-        // list listMyMeals(day?) {
-        //     @where(meal.plan.owner == ctx.identity)
-        // }
-        create createMealExistingDish() with (time.day, time.type, dish.id, plan.id)
-        create createMeal() with (
-            time.day,
-            time.type,
-            dish.name,
-            dish.recipe,
-            dish.portions,
-            plan.id,
-        )
-        update updateMeal(id) with (time.day?, time.type?, dish.id?, plan.id?)
-        delete deleteMeal(id)
-    }
-
-    @permission(
-        actions: [get, list, create, update, delete],
-        expression: ctx.isAuthenticated
-    )
-}
-
-model Plan {
-    fields {
-        meals Meal[]
-        mouthsToFeed Number
-        weekNumber Number @unique
-        owner Identity
-    }
-
-    actions {
-        get getPlan(id)
-        get getMyWeeklyPlan(weekNumber, owner.id)
-        // {
-        //     @where(plan.owner == ctx.identity)
-        // }
-        list listPlans()
-        list listMyPlan(weekNumber?, meals.time.day?, meals.time.type?) {
-            @where(plan.owner == ctx.identity)
-        }
-        list listMyDailyPlan(weekNumber, meals.time.day) {
-            @where(plan.owner == ctx.identity)
-        }
-        create createPlan() with (meals.id?, mouthsToFeed, weekNumber) {
-            @set(plan.owner = ctx.identity)
-        }
-        update updatePlanMeal(id) with (meals.id?, mouthsToFeed?, weekNumber?)
-        delete deletePlan(id)
-    }
-
-    @permission(
-        actions: [get, list, create, update, delete],
-        expression: ctx.isAuthenticated
+        expression: ctx.isAuthenticated,
+        actions: [get, list, update, delete]
     )
 }
