@@ -20,7 +20,7 @@ model WeeklyPlan {
     }
 
     actions {
-        get getMyWeeklyPlan(id) {
+        get getMyWeeklyPlan(weekNumber) {
             @where(ctx.identity == weeklyPlan.owner)
         }
         list listMyWeeklyPlans() {
