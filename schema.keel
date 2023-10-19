@@ -21,9 +21,7 @@ model WeeklyPlan {
 
     actions {
         get getWeeklyPlan(id)
-        get getWeeklyPlanForOwner(weekNumber, owner.id) {
-            @permission(expression: ctx.isAuthenticated)
-        }
+        get getWeeklyPlanForOwner(weekNumber, owner.id)
         get getMyWeeklyPlan(weekNumber) {
             @where(ctx.identity == weeklyPlan.owner)
             @permission(expression: ctx.identity == weeklyPlan.owner)
