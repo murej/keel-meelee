@@ -25,7 +25,10 @@ model WeeklyPlan {
             @where(ctx.identity == weeklyPlan.owner)
         }
         list listMyWeeklyPlans() {
-            @where(ctx.identity == weeklyPlan.owner.identity)
+            @where(ctx.identity == weeklyPlan.owner)
+        }
+        list listWeeklyPlanForOwner(owner.id) {
+            @permission(expression: ctx.isAuthenticated)
         }
         create createMyWeeklyPlan() with (
             weekNumber,
@@ -51,7 +54,7 @@ model WeeklyPlan {
     @unique([weekNumber, owner])
 
     @permission(
-        expression: ctx.isAuthenticated,
+        expression: ctx.identity == weeklyPlan.owner,
         actions: [get, list, create, update, delete]
     )
 }
