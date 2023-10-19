@@ -16,13 +16,13 @@ model WeeklyPlan {
     fields {
         meals Meal[]
         weekNumber Number
-        owner User @unique
+        owner Identity @unique
     }
 
     actions {
         get getWeeklyPlan(id)
         get getMyWeeklyPlan(weekNumber) {
-            @where(ctx.identity == weeklyPlan.owner.identity)
+            @where(ctx.identity == weeklyPlan.owner)
         }
         list listMyWeeklyPlans() {
             @where(ctx.identity == weeklyPlan.owner.identity)
@@ -33,7 +33,7 @@ model WeeklyPlan {
             meals.day,
             meals.time,
         ) {
-            @set(weeklyPlan.owner.identity = ctx.identity)
+            @set(weeklyPlan.owner = ctx.identity)
         }
         update updateMyWeeklyPlan(id) with (
             weekNumber?,
@@ -41,10 +41,10 @@ model WeeklyPlan {
             meals.day?,
             meals.time?,
         ) {
-            @where(ctx.identity == weeklyPlan.owner.identity)
+            @where(ctx.identity == weeklyPlan.owner)
         }
         delete deleteMyWeeklyPlan(id) {
-            @where(ctx.identity == weeklyPlan.owner.identity)
+            @where(ctx.identity == weeklyPlan.owner)
         }
     }
 
@@ -95,18 +95,4 @@ model Dish {
         expression: ctx.isAuthenticated,
         actions: [get, list, create, update, delete]
     )
-}
-
-model User {
-    fields {
-        identity Identity @unique
-        frontendToken Password? @unique
-    }
-
-    actions {
-        get getMyUser() {
-            @where(user.identity == ctx.identity)
-        }
-        update setUserToken(id) with (frontendToken)
-    }
 }
