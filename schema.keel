@@ -63,7 +63,7 @@ model Meal {
 
     actions {
         get getMeal(id)
-        list listMeals()
+        list listMeals(weeklyPlan.id?)
         update updateMeal(id) with (dish.id, time)
         delete deleteMeal(id)
     }
