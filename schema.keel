@@ -6,7 +6,7 @@ enum DayInAWeek {
     Friday
 }
 
-enum MealType {
+enum MealTime {
     Breakfast
     Lunch
     Dinner
@@ -46,7 +46,8 @@ model WeeklyPlan {
 model Meal {
     fields {
         dish Dish
-        time DayInAWeek
+        day DayInAWeek
+        time MealTime
         weeklyPlan WeeklyPlan @unique
     }
 
