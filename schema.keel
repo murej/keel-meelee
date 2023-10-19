@@ -26,10 +26,20 @@ model WeeklyPlan {
         list listMyWeeklyPlans() {
             @where(ctx.identity == weeklyPlan.owner)
         }
-        create createMyWeeklyPlan() with (weekNumber, meals.dish.id, meals.time) {
+        create createMyWeeklyPlan() with (
+            weekNumber,
+            meals.dish.id,
+            meals.day,
+            meals.time,
+        ) {
             @set(weeklyPlan.owner = ctx.identity)
         }
-        update updateMyWeeklyPlan(id) with (weekNumber?, meals.dish.id?, meals.time?) {
+        update updateMyWeeklyPlan(id) with (
+            weekNumber?,
+            meals.dish.id?,
+            meals.day?,
+            meals.time?,
+        ) {
             @where(ctx.identity == weeklyPlan.owner)
         }
         delete deleteMyWeeklyPlan(id) {
